@@ -42,8 +42,10 @@ class Game:
         save["player"]["damage"] = player.damage
         save["player"]["current location"] = self.current_location_name
 
+
         with open(self.current_save, "w") as file:
             json.dump(save, file)
+        print("Game was saved")
 
 
     def player_loader(self):
@@ -92,7 +94,7 @@ class Game:
                 print(f"You deal {player.damage} damage to {enemy.name}")
                 time.sleep(0.5)
                 if not enemy.is_alive():
-                    print(f"You felled {enemy.name}!") 
+                    print(f"You felled {enemy.name}!")
                     # check if enemy's eq is not empty
                     if enemy.eq:
                         # if not, add it to player's eq
@@ -100,6 +102,7 @@ class Game:
                             player.eq.append(item)
                             print(f"You found {item['name']}!")
                             time.sleep(0.5)
+                    self.save_the_game(player)
                     #wychodzimy z funkcji bo przeciwnik umarł i nie będzie już atakować gracza
                     return  
 
