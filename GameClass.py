@@ -22,25 +22,40 @@ def fightEnemyTurn(player, enemy):
 class Game:
     def __init__(self, map_data):
         self.locations = [Location(location_data) for location_data in map_data["Locations"]]
-        self.i = len(os.listdir(os.path.dirname(__file__)+"\saves"))
+        self.i = len(os.listdir(os.path.dirname(__file__)+"\\saves"))
         
         
     
     def new_save(self):
-        newSave = os.path.dirname(__file__)+"\saves\save"+str(self.i)+".json"
+        newSave = os.path.dirname(__file__)+"\\saves\\save"+str(self.i)+".json"
         shutil.copy("Constructor.json", newSave)
         self.current_save = newSave
 
     def load_save(self, number: int):
-        self.current_save = os.path.dirname(__file__)+"\saves\save"+str(number)+".json"
+        self.current_save = os.path.dirname(__file__)+"\\saves\\save"+str(number)+".json"
 
-    def save_the_game(self, player):
+    def save_the_game(self, player, fight=True, enemy=None):
         with open(self.current_save, "r") as file:
             save = json.load(file)
         save["player"]["armour"] = player.armour
         save["player"]["health"] = player.health
         save["player"]["damage"] = player.damage
+        save["player"]["eq"] = player.eq
         save["player"]["current location"] = self.current_location_name
+
+        if fight:
+            i=0
+            for x in save["Locations"]:
+                if x["Name"] == self.current_location_name:
+                    ii = 0
+                    for y in x["Enemies"]:
+                        if y["name"] == enemy.name:
+                            break
+                        ii+=1
+                    break
+                i+=1
+            save["Locations"][i]["Enemies"][ii]["hp"] = 0
+            
 
 
         with open(self.current_save, "w") as file:
@@ -57,7 +72,8 @@ class Game:
         health = player["health"]
         armour = player["armour"]
         damage = player["damage"]
-        return [health, armour, damage]
+        eq = player["eq"]
+        return [health, armour, damage, eq]
 
     def get_location(self, location_name):
         for location in self.locations:
@@ -102,7 +118,7 @@ class Game:
                             player.eq.append(item)
                             print(f"You found {item['name']}!")
                             time.sleep(0.5)
-                    self.save_the_game(player)
+                    self.save_the_game(player, True, enemy)
                     #wychodzimy z funkcji bo przeciwnik umarł i nie będzie już atakować gracza
                     return  
 

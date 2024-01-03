@@ -1,4 +1,4 @@
-import json
+import json, os
 # import Enemy_Player_classes
 import time #dodanie odstepu pomiedzy wiadomosciami
 
@@ -6,16 +6,13 @@ from PlayerClass import Player
 from EnemyClass import Enemy
 from GameClass import Game
 
-def main():
-    with open('Constructor.json', 'r') as file:
-        map_data = json.load(file)
+def main(game):
 
-    game = Game(map_data)
-    game.new_save()
-    game.load_save(1)
+    #game.new_save()
+    #game.load_save(1)
     save = game.player_loader()
     # player = Enemy_Player_classes.Player(6, 0, 2)
-    player = Player(save[0], save[1], save[2])
+    player = Player(save[0], save[1], save[2], save[3])
 
     while True:
         game.print_current_location()
@@ -80,5 +77,36 @@ def main():
             print("Invalid action. Try again.")
 
 
+def menu():
+    print("Choose what you want to do:")
+    action = input("Load game/new game/exit/ ")
+    action = action.lower().replace(" ","")
+    if action == "exit":
+        print("you exit the game")
+    elif action == "newgame":
+        with open("Constructor.json" ,"r") as file:
+            map_data = json.load(file)
+        game = Game(map_data)
+        game.new_save()
+        main(game)
+    elif action == "loadgame":
+        saves = os.listdir(os.path.dirname(__file__)+"\\saves")
+        if saves:
+            print("thats your saves")
+            for save in saves:
+                print(save[:save.find(".")])
+            number = int(input("chose write only number of save: "))
+            with open(os.path.dirname(__file__)+"\\saves\\save"+str(number)+".json", 'r') as file:
+                map_data = json.load(file)
+            game = Game(map_data)
+            game.load_save(number)
+            main(game)
+        else:
+            print("you dinnt create any saves")
+            menu()
+    else:
+        print("you input wrong command")
+        menu()
+        #action = int(input("choose number of your save: "))
 if __name__ == "__main__":
-    main()
+    menu()

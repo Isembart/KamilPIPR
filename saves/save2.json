@@ -287,6 +287,7 @@
         "current location": "Elven Valley",
         "health": 1000,
         "damage": 20,
-        "armour": 0
+        "armour": 0,
+        "eq":[]
     }
 }
