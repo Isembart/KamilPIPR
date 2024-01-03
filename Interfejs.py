@@ -12,12 +12,14 @@ def main():
 
     game = Game(map_data)
     game.new_save()
+    game.load_save(1)
     save = game.player_loader()
     # player = Enemy_Player_classes.Player(6, 0, 2)
     player = Player(save[0], save[1], save[2])
+
     while True:
         game.print_current_location()
-        action = input("What do you want to do? (move/player stats/attack/show details/exit): ").lower().strip()
+        action = input("What do you want to do? (move/player stats/attack/show details/save/exit): ").lower().strip()
         if action == "move":
             direction = input("Choose your next move (north/east/south/west): ").lower().strip()
             game.move(direction)
@@ -26,6 +28,8 @@ def main():
         elif action == "exit":
             print("Exiting the game. Goodbye!")
             break
+        elif action == "save":
+            game.save_the_game(player)
         elif action == "player stats":
             player_heart = player.health
             player_armour = player.armour

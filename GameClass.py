@@ -3,6 +3,7 @@ from LocationClass import Location
 import random
 import os
 import shutil
+import time
 from PlayerClass import Player
 
 from PlayerClass import Player #potrzebne aby stworzyc logike walki
@@ -21,20 +22,36 @@ def fightEnemyTurn(player, enemy):
 class Game:
     def __init__(self, map_data):
         self.locations = [Location(location_data) for location_data in map_data["Locations"]]
+        self.i = len(os.listdir(os.path.dirname(__file__)+"\saves"))
+        
         
     
     def new_save(self):
-        i = len(os.listdir("D:\studia\python\Pipr\projekt_git\saves"))
-
-        newSave = "D:\\studia\\python\\Pipr\\projekt_git\\saves\\save"+str(i)+".json"
+        newSave = os.path.dirname(__file__)+"\saves\save"+str(self.i)+".json"
         shutil.copy("Constructor.json", newSave)
         self.current_save = newSave
 
-    def player_loader(self):
+    def load_save(self, number: int):
+        self.current_save = os.path.dirname(__file__)+"\saves\save"+str(number)+".json"
+
+    def save_the_game(self, player):
+        with open(self.current_save, "r") as file:
+            save = json.load(file)
+        save["player"]["armour"] = player.armour
+        save["player"]["health"] = player.health
+        save["player"]["damage"] = player.damage
+        save["player"]["current location"] = self.current_location_name
+
         with open(self.current_save, "w") as file:
+            json.dump(save, file)
+
+
+    def player_loader(self):
+        with open(self.current_save, "r") as file:
             save = json.load(file)
         player = save["player"]
         self.current_location = self.get_location(player["current location"])
+        self.current_location_name = player["current location"]
         health = player["health"]
         armour = player["armour"]
         damage = player["damage"]
@@ -55,6 +72,7 @@ class Game:
             next_location = self.get_location(next_location_name)
             if next_location:
                 self.current_location = next_location
+                self.current_location_name = next_location.name
                 print("You moved to", next_location.name, "\n")
             else:
                 print("Invalid location.")
