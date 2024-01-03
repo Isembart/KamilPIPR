@@ -282,5 +282,11 @@
         "PC": ["##", "##", "##", "BAW"],
         "TH": ["DM", "##", "BAW", "##"],
         "DM": ["##", "##", "TH", "##"]
+    },
+    "player":{
+        "current location": "Elven Valley",
+        "health": 1000,
+        "damage": 20,
+        "armour": 0
     }
 }

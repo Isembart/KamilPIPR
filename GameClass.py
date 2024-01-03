@@ -1,5 +1,9 @@
+import json
 from LocationClass import Location
 import random
+import os
+import shutil
+from PlayerClass import Player
 
 from PlayerClass import Player #potrzebne aby stworzyc logike walki
 from EnemyClass import Enemy #potrzebne aby stworzyc logike walki
@@ -17,7 +21,24 @@ def fightEnemyTurn(player, enemy):
 class Game:
     def __init__(self, map_data):
         self.locations = [Location(location_data) for location_data in map_data["Locations"]]
-        self.current_location = self.get_location("Elven Valley")
+        
+    
+    def new_save(self):
+        i = len(os.listdir("D:\studia\python\Pipr\projekt_git\saves"))
+
+        newSave = "D:\\studia\\python\\Pipr\\projekt_git\\saves\\save"+str(i)+".json"
+        shutil.copy("Constructor.json", newSave)
+        self.current_save = newSave
+
+    def player_loader(self):
+        with open(self.current_save, "w") as file:
+            save = json.load(file)
+        player = save["player"]
+        self.current_location = self.get_location(player["current location"])
+        health = player["health"]
+        armour = player["armour"]
+        damage = player["damage"]
+        return [health, armour, damage]
 
     def get_location(self, location_name):
         for location in self.locations:

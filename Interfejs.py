@@ -11,8 +11,10 @@ def main():
         map_data = json.load(file)
 
     game = Game(map_data)
+    game.new_save()
+    save = game.player_loader()
     # player = Enemy_Player_classes.Player(6, 0, 2)
-    player = Player(1000, 0, 100)
+    player = Player(save[0], save[1], save[2])
     while True:
         game.print_current_location()
         action = input("What do you want to do? (move/player stats/attack/show details/exit): ").lower().strip()
