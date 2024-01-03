@@ -5,7 +5,6 @@ class Location:
         self.items = location_data["Item"]
         self.allies = location_data["Allies"]
         self.enemies = location_data["Enemies"]
-        self.seen = location_data["Seen"]
         self.near_locations = location_data["Near"]
         self.description = location_data["Description"] if "Description" in location_data else []
 
