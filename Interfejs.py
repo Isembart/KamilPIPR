@@ -18,27 +18,34 @@ def main(game):
     while True:
         game.print_current_location()
         action = input("What do you want to do? (move/player stats/attack/show details/save/exit): ").lower().strip()
+
+        # Ruch gracza
         if action == "move":
             direction = input("Choose your next move (north/east/south/west): ").lower().strip()
             game.move(direction)
+        
+        # Wyświetlanie szczegółów lokacji
         elif action == "show details":
             game.current_location.show_details()
+        
+        # Wyjście z gry
         elif action == "exit":
             delayedPrint("Exiting the game. Goodbye!")
             break
+        
+        # Zapisywanie gry
         elif action == "save":
             game.save_the_game(player)
+
+        # Wyświetlanie statystyk gracza
         elif action == "player stats":
-            player_heart = player.health
-            player_armour = player.armour
-            player_damage = player.damage
-            player_gold = player.gold
             delayedPrint("player stats:")
-            delayedPrint(f"Heart: {player_heart}")
-            delayedPrint(f"Armour: {player_armour}")
-            delayedPrint(f"Damage: {player_damage}")
-            delayedPrint(f"Gold: {player_gold}")
+            delayedPrint(f"Heart: {player.heart}")
+            delayedPrint(f"Armour: {player.armour}")
+            delayedPrint(f"Damage: {player.damage}")
+            delayedPrint(f"Gold: {player.gold}")
             pom_string=""
+            # wyświetlanie ekwipunku
             for item in player.eq:
                 pom_string=pom_string+item["name"]+" "
                 
@@ -78,36 +85,45 @@ def main(game):
             delayedPrint("Invalid action. Try again.")
 
 
+# menu pozwalajace wznowić lub rozpocząć nową grę
 def menu():
     print("Choose what you want to do:")
     action = input("Load game/new game/exit/ ")
     action = action.lower().replace(" ","")
     if action == "exit":
-        print("you exit the game")
+        print("Goodbye")
+    
+    # Nowa gra
     elif action == "newgame":
         with open("Constructor.json" ,"r") as file:
             map_data = json.load(file)
         game = Game(map_data)
         game.new_save()
         main(game)
+    
+    # Wybór zapisu
     elif action == "loadgame":
         saves = os.listdir(os.path.dirname(__file__)+"\\saves")
         if saves:
             print("thats your saves")
             for save in saves:
                 print(save[:save.find(".")])
-            number = int(input("chose write only number of save: "))
+            number = int(input("choose save number: "))
             with open(os.path.dirname(__file__)+"\\saves\\save"+str(number)+".json", 'r') as file:
                 map_data = json.load(file)
+
+            # Główne załadowanie danych gry
             game = Game(map_data)
             game.load_save(number)
             main(game)
+
         else:
             print("you dinnt create any saves")
             menu()
     else:
-        print("you input wrong command")
+        print("Wrong Command!")
         menu()
         #action = int(input("choose number of your save: "))
+
 if __name__ == "__main__":
     menu()

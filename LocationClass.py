@@ -8,9 +8,11 @@ class Location:
         self.near_locations = location_data["Near"]
         self.description = location_data["Description"] if "Description" in location_data else []
 
+    # Funkcja pozwalająca zamienić objekt lokacji na tekst zawierający jej opis
     def __str__(self):
         return f"{self.name}\nDescription: \n{''.join(desc['description'] for desc in self.description)}"
 
+    # Funkcja wyświetlająca szczegóły lokacji
     def show_details(self):
         print(f"\n{self.name} Details:")
         print("Items:")
@@ -27,8 +29,10 @@ class Location:
                 print(f"dmg - {enemy['dmg']}")
                 print(f"eq - {enemy['eq']}")
 
+    # Funckja zwraca opis lokacji w formie tekstu
     def get_description(self):
         return f"{self.name}\n\nDescription: \n{' '.join(desc['description'] for desc in self.description)}\n"
-
+            
+    # brief Funkcja zwracająca listę przeciwników w aktualnej lokacji
     def get_enemies(self):
         return [x["name"] for x in self.enemies if x["hp"] != 0]
