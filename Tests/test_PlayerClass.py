@@ -9,12 +9,13 @@ import math #potrzebne do obliczenia pancerza
 class TestPlayerClass:
     @pytest.fixture
     def player(self):
-        return Player(100, 50, 20)
+        return Player(100, 50, 20, None)
 
     def test_initialization(self, player):
         assert player.health == 100
         assert player.armour == 50
         assert player.damage == 20
+        assert player.eq == None
 
     def test_take_damage(self, player):
         player.take_damage(20)
