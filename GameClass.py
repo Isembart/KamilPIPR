@@ -10,13 +10,15 @@ from PlayerClass import Player #potrzebne aby stworzyc logike walki
 from EnemyClass import Enemy #potrzebne aby stworzyc logike walki
 import time #dodanie odstepu pomiedzy wiadomosciami podczas walki
 
+from delayedPrint import delayedPrint
+
 def fightEnemyTurn(player, enemy):
     #Przeciwnik atakuje gracza
-    print(f"{enemy.name} attacks you for {enemy.dmg} damage!")
+    delayedPrint(f"{enemy.name} attacks you for {enemy.dmg} damage!")
     player.take_damage(enemy.dmg)
     time.sleep(0.5)
     if not player.is_alive():
-        print("You are dead!")
+        delayedPrint("You are dead!")
         exit(0)
 
 class Game:
@@ -82,7 +84,7 @@ class Game:
         return None
 
     def print_current_location(self):
-        print(self.current_location.get_description())
+        delayedPrint(self.current_location.get_description())
 
     def move(self, direction):
         next_location_name = self.current_location.near_locations.get(direction)
@@ -91,32 +93,32 @@ class Game:
             if next_location:
                 self.current_location = next_location
                 self.current_location_name = next_location.name
-                print("You moved to", next_location.name, "\n")
+                delayedPrint(f"You moved to {next_location.name} \n")
             else:
-                print("Invalid location.")
+                delayedPrint("Invalid location.")
         else:
-            print("Invalid move. Try again.")
+            delayedPrint("Invalid move. Try again.")
 
     def get_enemies_in_current_location(self):
         return self.current_location.get_enemies()
 
     def fight(self, player, enemy):
         while True:
-            print(f"Your HP:{player.health}\nEnemy HP:{enemy.hp}\n")
+            delayedPrint(f"Your HP:{player.health}\nEnemy HP:{enemy.hp}\n")
             action = input(f"Run or Attack?").strip().lower()
             if(action == "attack"):
                 #Gracz atakuje przeciwnika:
                 enemy.take_damage(player.damage)
-                print(f"You deal {player.damage} damage to {enemy.name}")
+                delayedPrint(f"You deal {player.damage} damage to {enemy.name}")
                 time.sleep(0.5)
                 if not enemy.is_alive():
-                    print(f"You felled {enemy.name}!")
+                    delayedPrint(f"You felled {enemy.name}!") 
                     # check if enemy's eq is not empty
                     if enemy.eq:
                         # if not, add it to player's eq
                         for item in enemy.eq:
                             player.eq.append(item)
-                            print(f"You found {item['name']}!")
+                            delayedPrint(f"You found {item['name']}!")
                             time.sleep(0.5)
                     self.save_the_game(player, True, enemy)
                     #wychodzimy z funkcji bo przeciwnik umarł i nie będzie już atakować gracza
@@ -129,10 +131,10 @@ class Game:
                 #Gracz ucieka z walki
                 player_chance = random.randint(0,10)
                 if player_chance > 5:
-                    print("You run away!")    
+                    delayedPrint("You run away!")    
                     break
                         
-                print("You dont run away!") 
+                delayedPrint("You dont run away!") 
                 fightEnemyTurn(player, enemy)
 
 

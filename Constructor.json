@@ -6,7 +6,6 @@
             "Item": [],
             "Allies": [],
             "Enemies": [],
-            "Seen": true,
             "Near":{
                 "north": "Cyclops Castle",
                 "east": "Elven Camp"
@@ -45,7 +44,6 @@
                     ]
                 }
             ],
-            "Seen": true,
             "Near":{
                 "north": "Base of Ancient Witches",
                 "south": "Elven Valley"
@@ -83,7 +81,6 @@
                 }
             ],
             "Enemies": [],
-            "Seen": true,
             "Near":{
                 "north": "Elven Dungeon",
                 "west": "Elven Valley"
@@ -115,7 +112,6 @@
                     "dmg": 30
                 }
             ],
-            "Seen": true,
             "Near":{
                 "south": "Elven Camp"
             },
@@ -137,7 +133,6 @@
                 }
             ],
             "Enemies": [],
-            "Seen": true,
             "Near":{
                 "north": "Troll Hills",
                 "east": "People City",
@@ -177,7 +172,6 @@
                     ]
                 }
             ],
-            "Seen": true,
             "Near":{
                 "west": "Base of Ancient Witches"
             },
@@ -227,7 +221,6 @@
                     "dmg": 40
                 }
             ],
-            "Seen": true,
             "Near":{
                 "north": "Dragon Mountains",
                 "south": "Base of Ancient Witches"
@@ -256,7 +249,6 @@
                     ]
                 }
             ],
-            "Seen": true,
             "Near":{
                 "south": "Troll Hills"
             },

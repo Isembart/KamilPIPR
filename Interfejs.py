@@ -5,6 +5,7 @@ import time #dodanie odstepu pomiedzy wiadomosciami
 from PlayerClass import Player
 from EnemyClass import Enemy
 from GameClass import Game
+from delayedPrint import delayedPrint
 
 def main(game):
 
@@ -23,7 +24,7 @@ def main(game):
         elif action == "show details":
             game.current_location.show_details()
         elif action == "exit":
-            print("Exiting the game. Goodbye!")
+            delayedPrint("Exiting the game. Goodbye!")
             break
         elif action == "save":
             game.save_the_game(player)
@@ -32,22 +33,22 @@ def main(game):
             player_armour = player.armour
             player_damage = player.damage
             player_gold = player.gold
-            print("player stats:")
-            print(f"Heart: {player_heart}")
-            print(f"Armour: {player_armour}")
-            print(f"Damage: {player_damage}")
-            print(f"Gold: {player_gold}")
+            delayedPrint("player stats:")
+            delayedPrint(f"Heart: {player_heart}")
+            delayedPrint(f"Armour: {player_armour}")
+            delayedPrint(f"Damage: {player_damage}")
+            delayedPrint(f"Gold: {player_gold}")
             pom_string=""
             for item in player.eq:
                 pom_string=pom_string+item["name"]+" "
                 
-            print(f"Equipment: {pom_string}")
+            delayedPrint(f"Equipment: {pom_string}")
         elif action == "attack":
 
             enemies = game.get_enemies_in_current_location()
             # być moze lepszym pomyslem bedzie stworzenie metody Game::Get_Current_Location() bo Location ma metode get_enemies()
             if not enemies:
-                print("There is no one to attack.")
+                delayedPrint("There is no one to attack.")
                 time.sleep(0.5)
                 continue
             stringer_helper = ""
@@ -72,9 +73,9 @@ def main(game):
             elif action == "go back":
                 pass
             else:
-                print("Invalid action. Try again.")
+                delayedPrint("Invalid action. Try again.")
         else:
-            print("Invalid action. Try again.")
+            delayedPrint("Invalid action. Try again.")
 
 
 def menu():
