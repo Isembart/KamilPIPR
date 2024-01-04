@@ -21,13 +21,14 @@ class Location:
             print(f"- {ally['name']}")
         print("Enemies:")
         for enemy in self.enemies:
-            print(f"- {enemy['name']}")
-            print(f"hp - {enemy['hp']}")
-            print(f"dmg - {enemy['dmg']}")
-            print(f"eq - {enemy['eq']}")
+            if enemy['hp'] != 0:
+                print(f"- {enemy['name']}")
+                print(f"hp - {enemy['hp']}")
+                print(f"dmg - {enemy['dmg']}")
+                print(f"eq - {enemy['eq']}")
 
     def get_description(self):
         return f"{self.name}\n\nDescription: \n{' '.join(desc['description'] for desc in self.description)}\n"
 
     def get_enemies(self):
-        return [x["name"] for x in self.enemies]
+        return [x["name"] for x in self.enemies if x["hp"] != 0]

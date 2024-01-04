@@ -1,4 +1,4 @@
-import json
+import json, os
 # import Enemy_Player_classes
 import time #dodanie odstepu pomiedzy wiadomosciami
 
@@ -7,16 +7,17 @@ from EnemyClass import Enemy
 from GameClass import Game
 from delayedPrint import delayedPrint
 
-def main():
-    with open('Constructor.json', 'r') as file:
-        map_data = json.load(file)
+def main(game):
 
-    game = Game(map_data)
+    #game.new_save()
+    #game.load_save(1)
+    save = game.player_loader()
     # player = Enemy_Player_classes.Player(6, 0, 2)
-    player = Player(1000, 0, 100)
+    player = Player(save[0], save[1], save[2], save[3])
+
     while True:
         game.print_current_location()
-        action = input("What do you want to do? (move/player stats/attack/show details/exit): ").lower().strip()
+        action = input("What do you want to do? (move/player stats/attack/show details/save/exit): ").lower().strip()
         if action == "move":
             direction = input("Choose your next move (north/east/south/west): ").lower().strip()
             game.move(direction)
@@ -25,6 +26,8 @@ def main():
         elif action == "exit":
             delayedPrint("Exiting the game. Goodbye!")
             break
+        elif action == "save":
+            game.save_the_game(player)
         elif action == "player stats":
             player_heart = player.health
             player_armour = player.armour
@@ -75,5 +78,36 @@ def main():
             delayedPrint("Invalid action. Try again.")
 
 
+def menu():
+    print("Choose what you want to do:")
+    action = input("Load game/new game/exit/ ")
+    action = action.lower().replace(" ","")
+    if action == "exit":
+        print("you exit the game")
+    elif action == "newgame":
+        with open("Constructor.json" ,"r") as file:
+            map_data = json.load(file)
+        game = Game(map_data)
+        game.new_save()
+        main(game)
+    elif action == "loadgame":
+        saves = os.listdir(os.path.dirname(__file__)+"\\saves")
+        if saves:
+            print("thats your saves")
+            for save in saves:
+                print(save[:save.find(".")])
+            number = int(input("chose write only number of save: "))
+            with open(os.path.dirname(__file__)+"\\saves\\save"+str(number)+".json", 'r') as file:
+                map_data = json.load(file)
+            game = Game(map_data)
+            game.load_save(number)
+            main(game)
+        else:
+            print("you dinnt create any saves")
+            menu()
+    else:
+        print("you input wrong command")
+        menu()
+        #action = int(input("choose number of your save: "))
 if __name__ == "__main__":
-    main()
+    menu()

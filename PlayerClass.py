@@ -3,7 +3,7 @@ import json
 
 
 class Player:
-    def __init__(self, health: int, armour: int, damage: int):
+    def __init__(self, health: int, armour: int, damage: int, eq: list):
         if health < 0:
             raise ValueError("Health cannot be negative")
         if armour < 0:
@@ -14,7 +14,7 @@ class Player:
         self.armour = armour
         self.damage = damage
         self.gold = 0
-        self.eq = []
+        self.eq = eq
 
 
     def drop_weapon(self):
