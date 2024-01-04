@@ -7,6 +7,7 @@ from EnemyClass import Enemy
 from GameClass import Game
 from delayedPrint import delayedPrint
 
+
 def main(game):
 
     #game.new_save()
@@ -23,16 +24,16 @@ def main(game):
         if action == "move":
             direction = input("Choose your next move (north/east/south/west): ").lower().strip()
             game.move(direction)
-        
+
         # Wyświetlanie szczegółów lokacji
         elif action == "show details":
             game.current_location.show_details()
-        
+
         # Wyjście z gry
         elif action == "exit":
             delayedPrint("Exiting the game. Goodbye!")
             break
-        
+
         # Zapisywanie gry
         elif action == "save":
             game.save_the_game(player)
@@ -48,7 +49,7 @@ def main(game):
             # wyświetlanie ekwipunku
             for item in player.eq:
                 pom_string=pom_string+item["name"]+" "
-                
+
             delayedPrint(f"Equipment: {pom_string}")
         elif action == "attack":
 
@@ -76,7 +77,7 @@ def main(game):
                     enemyObj = Enemy(enemy_data["name"], enemy_data["hp"], enemy_data["dmg"], None)
 
                 game.fight(player, enemyObj)
-                
+
             elif action == "go back":
                 pass
             else:
@@ -92,7 +93,7 @@ def menu():
     action = action.lower().replace(" ","")
     if action == "exit":
         print("Goodbye")
-    
+
     # Nowa gra
     elif action == "newgame":
         with open("Constructor.json" ,"r") as file:
@@ -100,16 +101,16 @@ def menu():
         game = Game(map_data)
         game.new_save()
         main(game)
-    
+
     # Wybór zapisu
     elif action == "loadgame":
-        saves = os.listdir(os.path.dirname(__file__)+"\\saves")
+        saves = os.listdir(os.path.dirname(__file__)+"//saves")
         if saves:
             print("thats your saves")
             for save in saves:
                 print(save[:save.find(".")])
             number = int(input("choose save number: "))
-            with open(os.path.dirname(__file__)+"\\saves\\save"+str(number)+".json", 'r') as file:
+            with open(os.path.dirname(__file__)+"//saves//save"+str(number)+".json", 'r') as file:
                 map_data = json.load(file)
 
             # Główne załadowanie danych gry

@@ -12,7 +12,7 @@ import time #dodanie odstepu pomiedzy wiadomosciami podczas walki
 
 from delayedPrint import delayedPrint #ładniejsze wyświetlanie tekstu
 
-#zgodnie z zasadą DRY (Don't Repeat Yourself) ta część kodu jest osobną funkcją, ale nie jest to metoda klasy 
+#zgodnie z zasadą DRY (Don't Repeat Yourself) ta część kodu jest osobną funkcją, ale nie jest to metoda klasy
 def fightEnemyTurn(player, enemy):
     #Przeciwnik atakuje gracza
     delayedPrint(f"{enemy.name} attacks you for {enemy.dmg} damage!")
@@ -29,13 +29,13 @@ def fightEnemyTurn(player, enemy):
 class Game:
     def __init__(self, map_data):
         self.locations = [Location(location_data) for location_data in map_data["Locations"]]
-        self.i = len(os.listdir(os.path.dirname(__file__)+"\\saves"))
-        
+        self.i = len(os.listdir(os.path.dirname(__file__)+"//saves"))
+
     # @brief Funkcja tworząca nowy plik z zapisem gry
     # @return Funkcja nie zwraca żadnej wartości
-    # @details Funkcja tworząca nowy plik z zapisem gry, który jest zmodyfikowaną kopią pliku Constructor.json 
+    # @details Funkcja tworząca nowy plik z zapisem gry, który jest zmodyfikowaną kopią pliku Constructor.json
     def new_save(self):
-        newSave = os.path.dirname(__file__)+"\\saves\\save"+str(self.i)+".json"
+        newSave = os.path.dirname(__file__)+"//saves//save"+str(self.i)+".json"
         shutil.copy("Constructor.json", newSave)
         self.current_save = newSave
 
@@ -43,7 +43,7 @@ class Game:
     # @param number numer zapisu gry
     # @return Funkcja nie zwraca żadnej wartości
     def load_save(self, number: int):
-        self.current_save = os.path.dirname(__file__)+"\\saves\\save"+str(number)+".json"
+        self.current_save = os.path.dirname(__file__)+"//saves//save"+str(number)+".json"
 
     # @brief Funkcja zapisująca grę
     # @param player obiekt gracza
@@ -51,7 +51,7 @@ class Game:
     # @param enemy obiekt przeciwnika
     # @return Funkcja nie zwraca żadnej wartości
     # @details Funkcja zapisująca grę, która jest wywoływana w przypadku gdy gracz zakończy walkę
-    # Funkcja ta zapisuje aktualne statystyki gracza, a następnie jeśli gracz jest w walce, zapisuje bądź usuwa przeciwnika z lokacji 
+    # Funkcja ta zapisuje aktualne statystyki gracza, a następnie jeśli gracz jest w walce, zapisuje bądź usuwa przeciwnika z lokacji
     def save_the_game(self, player, fight=True, enemy=None):
         with open(self.current_save, "r") as file:
             save = json.load(file)
@@ -73,7 +73,7 @@ class Game:
                     break
                 i+=1
             save["Locations"][i]["Enemies"][ii]["hp"] = 0
-            
+
         with open(self.current_save, "w") as file:
             json.dump(save, file)
         print("Game was saved")
@@ -149,7 +149,7 @@ class Game:
                 delayedPrint(f"You deal {player.damage} damage to {enemy.name}")
                 time.sleep(0.5)
                 if not enemy.is_alive():
-                    delayedPrint(f"You felled {enemy.name}!") 
+                    delayedPrint(f"You felled {enemy.name}!")
                     # check if enemy's eq is not empty
                     if enemy.eq:
                         # if not, add it to player's eq
@@ -158,20 +158,28 @@ class Game:
                             delayedPrint(f"You found {item['name']}!")
                             time.sleep(0.5)
                     self.save_the_game(player, True, enemy)
+                    i=0
+                    for x in self.current_location.enemies:
+                        if x["name"] == enemy.name:
+                            self.current_location.enemies.remove(x)
+                            break
+                        i+=1
+                    # self.current_location.enemies[i].remove()
+
                     #wychodzimy z funkcji bo przeciwnik umarł i nie będzie już atakować gracza
-                    return  
+                    return
 
                 fightEnemyTurn(player, enemy)
-                
-            
+
+
             if(action == "run"):
                 #Gracz ucieka z walki
                 player_chance = random.randint(0,10)
                 if player_chance > 5:
-                    delayedPrint("You run away!")    
+                    delayedPrint("You run away!")
                     break
-                        
-                delayedPrint("You dont run away!") 
+
+                delayedPrint("You dont run away!")
                 fightEnemyTurn(player, enemy)
 
 
