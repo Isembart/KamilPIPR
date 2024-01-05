@@ -5,6 +5,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 from EnemyClass import Enemy
 
+
 class TestEnemyClass:
     @pytest.fixture
     def enemy(self):
@@ -22,7 +23,7 @@ class TestEnemyClass:
         assert enemy.is_alive() == False
         enemy.hp = -1
         assert enemy.is_alive() == False
-    
+
     def test_take_damage(self, enemy):
         enemy.take_damage(10)
         assert enemy.hp == 90
@@ -30,4 +31,3 @@ class TestEnemyClass:
         assert enemy.hp == 0
         enemy.take_damage(10)
         assert enemy.hp == -10
-    

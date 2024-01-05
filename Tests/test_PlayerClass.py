@@ -1,10 +1,9 @@
 import pytest
 import sys, os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
-
-
 from PlayerClass import Player
 import math #potrzebne do obliczenia pancerza
+
 
 class TestPlayerClass:
     @pytest.fixture
@@ -23,7 +22,7 @@ class TestPlayerClass:
 
     def test_repair_armour(self, player):
         player.gold = 100
-        player.repair_armour(20,60)
+        player.repair_armour(20, 60)
         assert player.armour == 60
         assert player.gold == 80
 
