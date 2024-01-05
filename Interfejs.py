@@ -1,7 +1,6 @@
 import json, os
 # import Enemy_Player_classes
 import time #dodanie odstepu pomiedzy wiadomosciami
-
 from PlayerClass import Player
 from EnemyClass import Enemy
 from GameClass import Game
@@ -41,14 +40,14 @@ def main(game):
         # Wyświetlanie statystyk gracza
         elif action == "player stats":
             delayedPrint("player stats:")
-            delayedPrint(f"Heart: {player.heart}")
+            delayedPrint(f"Heart: {player.health}")
             delayedPrint(f"Armour: {player.armour}")
             delayedPrint(f"Damage: {player.damage}")
             delayedPrint(f"Gold: {player.gold}")
-            pom_string=""
+            pom_string = ""
             # wyświetlanie ekwipunku
             for item in player.eq:
-                pom_string=pom_string+item["name"]+" "
+                pom_string = pom_string + item["name"] + " "
 
             delayedPrint(f"Equipment: {pom_string}")
         elif action == "attack":
@@ -90,7 +89,7 @@ def main(game):
 def menu():
     print("Choose what you want to do:")
     action = input("Load game/new game/exit/ ")
-    action = action.lower().replace(" ","")
+    action = action.lower().replace(" ", "")
     if action == "exit":
         print("Goodbye")
 
@@ -110,7 +109,7 @@ def menu():
             for save in saves:
                 print(save[:save.find(".")])
             number = int(input("choose save number: "))
-            with open(os.path.dirname(__file__)+"//saves//save"+str(number)+".json", 'r') as file:
+            with open(os.path.dirname(__file__) + "//saves//save" + str(number) + ".json", 'r') as file:
                 map_data = json.load(file)
 
             # Główne załadowanie danych gry
@@ -119,12 +118,13 @@ def menu():
             main(game)
 
         else:
-            print("you dinnt create any saves")
+            print("you didn't create any saves")
             menu()
     else:
         print("Wrong Command!")
         menu()
         #action = int(input("choose number of your save: "))
+
 
 if __name__ == "__main__":
     menu()

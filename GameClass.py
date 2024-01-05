@@ -4,7 +4,6 @@ import random
 import os
 import shutil
 import time
-from PlayerClass import Player
 
 from PlayerClass import Player #potrzebne aby stworzyc logike walki
 from EnemyClass import Enemy #potrzebne aby stworzyc logike walki
@@ -13,6 +12,8 @@ import time #dodanie odstepu pomiedzy wiadomosciami podczas walki
 from delayedPrint import delayedPrint #ładniejsze wyświetlanie tekstu
 
 #zgodnie z zasadą DRY (Don't Repeat Yourself) ta część kodu jest osobną funkcją, ale nie jest to metoda klasy
+
+
 def fightEnemyTurn(player, enemy):
     #Przeciwnik atakuje gracza
     delayedPrint(f"{enemy.name} attacks you for {enemy.dmg} damage!")
@@ -26,6 +27,8 @@ def fightEnemyTurn(player, enemy):
 # @details Klasa gry, która jest odpowiedzialna za logikę gry
 # Klasa ta zawiera obiekty wszystkich lokacji, które są zapisane w pliku Constructor.json
 # Klasa ta zawiera również funkcje odpowiedzialne za ruch gracza, walkę, zapis i wczytywanie gry
+
+
 class Game:
     def __init__(self, map_data):
         self.locations = [Location(location_data) for location_data in map_data["Locations"]]
@@ -62,16 +65,16 @@ class Game:
         save["player"]["current location"] = self.current_location_name
 
         if fight:
-            i=0
+            i = 0
             for x in save["Locations"]:
                 if x["Name"] == self.current_location_name:
                     ii = 0
                     for y in x["Enemies"]:
                         if y["name"] == enemy.name:
                             break
-                        ii+=1
+                        ii += 1
                     break
-                i+=1
+                i += 1
             save["Locations"][i]["Enemies"][ii]["hp"] = 0
 
         with open(self.current_save, "w") as file:
@@ -83,6 +86,8 @@ class Game:
     # @return Funkcja zwraca listę zawierającą dane gracza
     # @details Funkcja wczytująca dane gracza z pliku, które są zapisane w pliku save
     # Funkcja zwraca listę zawierającą dane gracza, które są potrzebne do stworzenia obiektu gracza
+
+
     def player_loader(self):
         with open(self.current_save, "r") as file:
             save = json.load(file)
@@ -139,6 +144,7 @@ class Game:
     # Jeśli gracz wybierze opcję ataku, gracz zadaje obrażenia przeciwnikowi, a następnie jeśli ten przeżył, przeciwnik atakuje gracza
     # Jeśli gracz wybierze opcję ucieczki, gracz ma 50% szans na ucieczkę, jeśli się nie uda, przeciwnik atakuje gracza
     # Funkcja kończy się w momencie gdy gracz lub przeciwnik umrze
+
     def fight(self, player, enemy):
         while True:
             delayedPrint(f"Your HP:{player.health}\nEnemy HP:{enemy.hp}\n")
@@ -158,12 +164,12 @@ class Game:
                             delayedPrint(f"You found {item['name']}!")
                             time.sleep(0.5)
                     self.save_the_game(player, True, enemy)
-                    i=0
+                    i = 0
                     for x in self.current_location.enemies:
                         if x["name"] == enemy.name:
                             self.current_location.enemies.remove(x)
                             break
-                        i+=1
+                        i += 1
                     # self.current_location.enemies[i].remove()
 
                     #wychodzimy z funkcji bo przeciwnik umarł i nie będzie już atakować gracza
@@ -172,14 +178,14 @@ class Game:
                 fightEnemyTurn(player, enemy)
 
 
-            if(action == "run"):
+            if (action == "run"):
                 #Gracz ucieka z walki
                 player_chance = random.randint(0,10)
                 if player_chance > 5:
                     delayedPrint("You run away!")
                     break
 
-                delayedPrint("You dont run away!")
+                delayedPrint("You don't run away!")
                 fightEnemyTurn(player, enemy)
 
 
