@@ -20,7 +20,8 @@ def main(game):
 
     while True:
         game.print_current_location()
-        action = input("What do you want to do? (move/player stats/attack/show details/save/exit): ").lower().strip()
+
+        action = input("What do you want to do? (move/player stats/attack/show details/map/save/exit): ").lower().strip()
         # lower.().strip() to końcówka, która poprawi nam błąd
         # spowodanym wpisaniem komendy dużymi literami
         # lub napisaniem spacji
@@ -42,6 +43,12 @@ def main(game):
         # Zapisywanie gry
         elif action == "save":
             game.save_the_game(player)
+        
+        elif action == "map":
+            map = game.get_available_locations()
+            delayedPrint(f"Available moves:")
+            for location in map:
+                print(location)
 
         # Wyświetlanie statystyk gracza
         elif action == "player stats":

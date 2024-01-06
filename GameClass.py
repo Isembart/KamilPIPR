@@ -106,7 +106,15 @@ class Game:
 
     # Funkcja wyświetlająca opis aktualnej lokacji
     def print_current_location(self):
-        delayedPrint(self.current_location.get_description())
+        # opis aktualnej lokacji
+        stringToPrint = self.current_location.get_description()
+
+        # mozliwe lokacje do przejscia
+        stringToPrint += f"\nAvailable locations:"
+        for location in self.get_available_locations():
+            stringToPrint+=f"\n{location}"
+
+        delayedPrint(stringToPrint)
 
     # @brief Funkcja ruchu
     # @param direction kierunek ruchu
@@ -130,6 +138,14 @@ class Game:
     def get_enemies_in_current_location(self):
         return self.current_location.get_enemies()
 
+
+    def get_available_locations(self):
+        """Zwraca listę dostępnych lokacji z aktualnej lokacji"""
+        actions = []
+        for key,value in self.current_location.near_locations.items():
+            actions.append(f"{key}: {value}")
+        return actions
+
     # Funkcja walki
     # Parametrem jest player - obiekt gracza
     # Drugim parametrem jest enemy - obiekt przeciwnika
@@ -139,7 +155,6 @@ class Game:
     # Jeśli gracz wybierze opcję ataku, gracz zadaje obrażenia przeciwnikowi, a następnie jeśli ten przeżył, przeciwnik atakuje gracza
     # Jeśli gracz wybierze opcję ucieczki, gracz ma 50% szans na ucieczkę, jeśli się nie uda, przeciwnik atakuje gracza
     # Funkcja kończy się w momencie gdy gracz lub przeciwnik umrze
-
     def fight(self, player, enemy):
         while True:
             delayedPrint(f"Your HP:{player.health}\nEnemy HP:{enemy.hp}\n")
