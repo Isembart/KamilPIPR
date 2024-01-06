@@ -129,11 +129,12 @@ class Game:
             if next_location:
                 self.current_location = next_location
                 self.current_location_name = next_location.name
-                delayedPrint(f"You moved to {next_location.name} \n")
             else:
-                delayedPrint("Invalid location.")
+                #używamy zwyklego printa dlatego że w przypadku złegoruchu gracz musi pominac tekst 2 razy 
+                print("Invalid location.")
         else:
-            delayedPrint("Invalid move. Try again.")
+            #używamy zwyklego printa dlatego że w przypadku złegoruchu gracz musi pominac tekst 2 razy 
+            print("Invalid move. Try again.")
 
     def get_enemies_in_current_location(self):
         return self.current_location.get_enemies()

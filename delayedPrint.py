@@ -1,36 +1,32 @@
 import time
 import random
-import keyboard  # wykrywanie klawiszy
+from pynput import keyboard  # wykrywanie wcisniecia jednoczesnie z wypisywaniem tekstu
 import threading  # wykrywanie wcisniecia jednoczesnie z wypisywaniem tekstu
 
-# Global flag to indicate if a key has been pressed
-key_pressed = False
+# Event to indicate if a key has been pressed
+key_pressed = threading.Event()
 
 # Funkcja sprawdzająca czy został wciśnięty jakiś klawisz
-def listen_for_keypress():
-    global key_pressed
-    keyboard.read_hotkey(suppress=True) # suppress = wcisniety klawisz nie zostanie wpisany do terminala
-    key_pressed = True
+def on_press(key):
+    key_pressed.set()
 
 # Funkcja, która umożliwia pojawianie się liter po kolei
 def delayedPrint(text):
-    global key_pressed
-    key_pressed = False
-    listener = threading.Thread(target=listen_for_keypress)
-    listener.start()
+    key_pressed.clear()
+    with keyboard.Listener(on_press=on_press, suppress=True) as listener:  # suppress key presses
 
-    for letter in text:
-        # end="" sprawia że delayedPrint nie kończy się nową linia
-        # flush = True pozwala wyświetlać po jednej literce
-        print(letter, end="", flush=True)
-        if (letter == " "):
-            time.sleep(random.randint(5, 20) / 1000)
-            continue
-        time.sleep(random.randint(1, 10) / 1000)
+        for letter in text:
+            # end="" sprawia że delayedPrint nie kończy się nową linia
+            # flush = True pozwala wyświetlać po jednej literce
+            print(letter, end="", flush=True)
+            if (letter == " "):
+                time.sleep(random.randint(5, 20) / 1000)
+                continue
+            if not key_pressed.wait(timeout=random.randint(1, 10) / 1000):  # wait for a key press or timeout
+                continue
 
-        # jesli gracz nacisnał klawisz, przerwij pisanie i wyswietl caly napis od razu
-        if key_pressed:  
-            print(text[text.index(letter)+1:], end="", flush=True)  
-            break 
+            # Check if any key is pressed
+            print(text[text.index(letter)+1:], end="", flush=True)  # print the rest of the text
+            break  # exit the loop
 
-    print()  # dodanie nowej linii po zakonczeniu delayedPrint
+        print()  # dodanie nowej linii po zakonczeniu delayedPrint
