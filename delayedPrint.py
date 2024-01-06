@@ -1,6 +1,8 @@
 import time
 import random
 
+# Funkcja, która umożliwia pojawianie się liter po kolei
+
 
 def delayedPrint(text):
     for letter in text:
@@ -11,4 +13,4 @@ def delayedPrint(text):
             time.sleep(random.randint(5, 20) / 1000)
             continue
         time.sleep(random.randint(1, 10) / 1000)
-    print()  #dodanie nowej linii po zakonczeniu delayedPrint
+    print()  # dodanie nowej linii po zakonczeniu delayedPrint

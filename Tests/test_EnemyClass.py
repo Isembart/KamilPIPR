@@ -1,10 +1,14 @@
 import pytest
-import sys, os
+import sys
+import os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from EnemyClass import (Enemy,
                         EmptyEnemyNameError,
                         NegativeEnemyDmgError,
                         NegativeEnemyHpError)
+
+# Testy, które zostały utworzone do klasy Enemy
+# Testują one atrybuty i metody danej klasy
 
 
 def test_enemy_init():

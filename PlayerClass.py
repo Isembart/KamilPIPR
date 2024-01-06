@@ -1,5 +1,7 @@
 import math
 
+# Wyjątki:
+
 
 class NegativePlayerHealthError(ValueError):
     pass
@@ -12,7 +14,7 @@ class NegativePlayerArmourError(ValueError):
 class NegativePlayerDamageError(ValueError):
     pass
 
-# Klasa Player pobiera informacje o naszym graczu, czyli jaką wartość życia ma itp.
+# Klasa Player otrzymuje informacje o naszym graczu, czyli jaką wartość życia ma itp. z pliku "Constructor.json"
 class Player:
     def __init__(self, health: int, armour: int, damage: int, eq):
         if health < 0:

@@ -7,6 +7,9 @@ import sys
 import os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
+# Testy sprawdzają atrybuty klasy Player oraz ich warunki brzegowe
+# Sprawdzają również metody danej klasy
+
 
 def test_initialization():
     player = Player(100, 50, 20, None)

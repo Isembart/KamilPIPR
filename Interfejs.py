@@ -1,16 +1,19 @@
-import json, os
+import json
+import os
 # import Enemy_Player_classes
-import time #dodanie odstepu pomiedzy wiadomosciami
+import time # dodanie odstepu pomiedzy wiadomosciami
 from PlayerClass import Player
 from EnemyClass import Enemy
 from GameClass import Game
 from delayedPrint import delayedPrint
 
+# Funkcja ta printuje nam polecenie, które możemy wybrać, aby wykonać daną czynność
+
 
 def main(game):
 
-    #game.new_save()
-    #game.load_save(1)
+    # game.new_save()
+    # game.load_save(1)
     save = game.player_loader()
     # player = Enemy_Player_classes.Player(6, 0, 2)
     player = Player(save[0], save[1], save[2], save[3])
@@ -18,6 +21,9 @@ def main(game):
     while True:
         game.print_current_location()
         action = input("What do you want to do? (move/player stats/attack/show details/save/exit): ").lower().strip()
+        # lower.().strip() to końcówka, która poprawi nam błąd
+        # spowodanym wpisaniem komendy dużymi literami
+        # lub napisaniem spacji
 
         # Ruch gracza
         if action == "move":
@@ -45,15 +51,15 @@ def main(game):
             delayedPrint(f"Damage: {player.damage}")
             delayedPrint(f"Gold: {player.gold}")
             pom_string = ""
-            # wyświetlanie ekwipunku
+            # Wyświetlanie ekwipunku
             for item in player.eq:
                 pom_string = pom_string + item["name"] + " "
 
+            # Odwołanie się do funkcji, która wyświetla litery po kolei
             delayedPrint(f"Equipment: {pom_string}")
         elif action == "attack":
 
             enemies = game.get_enemies_in_current_location()
-            # być moze lepszym pomyslem bedzie stworzenie metody Game::Get_Current_Location() bo Location ma metode get_enemies()
             if not enemies:
                 delayedPrint("There is no one to attack.")
                 time.sleep(0.5)
@@ -64,7 +70,7 @@ def main(game):
 
             action = input(f"choose what enemy you will attack ({stringer_helper[:-2]}) or go back: ").strip()
 
-            # gracz wybrał poprawnego przeciwnika
+            # Gracz wybrał poprawnego przeciwnika
             if action in enemies:
                 # Game::Fight() jako argument potrzebuje obiektu przeciwnika, a LOCATION zawiera tylko słownik z danymi przeciwnika a nie obiekt
                 # dlatego musimy stworzyć obiekt przeciwnika na podstawie danych z mapy
@@ -85,11 +91,12 @@ def main(game):
             delayedPrint("Invalid action. Try again.")
 
 
-# menu pozwalajace wznowić lub rozpocząć nową grę
+# Menu pozwalajace wznowić lub rozpocząć nową grę
 def menu():
     print("Choose what you want to do:")
     action = input("Load game/new game/exit/ ")
     action = action.lower().replace(" ", "")
+    # Funkcja replace zamienia nam dany symbol na inny
     if action == "exit":
         print("Goodbye")
 
@@ -123,7 +130,7 @@ def menu():
     else:
         print("Wrong Command!")
         menu()
-        #action = int(input("choose number of your save: "))
+        # action = int(input("choose number of your save: "))
 
 
 if __name__ == "__main__":
