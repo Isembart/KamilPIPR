@@ -3,7 +3,6 @@
         {
             "Id": "SA",
             "Name": "Elven Valley",
-            "Item": [],
             "Allies": [],
             "Enemies": [],
             "Near":{
@@ -26,7 +25,6 @@
         {
             "Id": "CC",
             "Name": "Cyclops Castle",
-            "Item": [],
             "Allies": [],
             "Enemies": [
                 {
@@ -34,7 +32,7 @@
                     "hp": 180,
                     "dmg": 80,
                     "eq": [
-                        {"id": "Bludgeon", "name": "Bludgeon", "damage":100, "type": "weapon"}
+                        {"id": "Bludgeon", "name": "Bludgeon", "damage": 100, "type": "weapon"}
                     ]
                 },
                 {
@@ -42,7 +40,7 @@
                     "hp": 300,
                     "dmg": 120,
                     "eq": [
-                        {"id": "War Hammer", "name": "War Hammer", "damage":100, "type": "weapon"}
+                        {"id": "War Hammer", "name": "War Hammer", "damage": 125, "type": "weapon"}
                     ]
                 }
             ],
@@ -60,7 +58,6 @@
         {
             "Id": "EC",
             "Name": "Elven Camp",
-            "Item": [],
             "Allies": [
                 {
                     "name": "Elf Doctor Peter"
@@ -75,8 +72,8 @@
                     "hp": 100,
                     "dmg": 70,
                     "eq": [
-                        {"id": "Sword", "name": "Sword", "damage":100, "type": "weapon"},
-                        {"id": "Armour", "name": "Armour", "armour":50, "type": "armour"},
+                        {"id": "Sword", "name": "Sword", "damage": 100, "type": "weapon"},
+                        {"id": "Armour", "name": "Armour", "armour": 50, "type": "armour"},
                         {"id": "Blood", "name": "Blood of Thunderroar", "properties": {"use": "Take this medicine", "heal": 880}}
                     ]
             }
@@ -103,7 +100,6 @@
         {
             "Id": "ED",
             "Name": "Elven Dungeon",
-            "Item": [],
             "Allies": [],
             "Enemies": [
                 {
@@ -111,7 +107,7 @@
                     "hp": 300,
                     "dmg": 150,
                     "eq": [
-                        {"id": "Wand", "name": "Leader of witches' Wand", "damage":100, "type": "weapon"}
+                        {"id": "Wand", "name": "Leader of witches' Wand", "damage": 100, "type": "weapon"}
                     ]
                 }
             ],
@@ -127,7 +123,6 @@
         {
             "Id": "BAW",
             "Name": "Base of Ancient Witches",
-            "Item": [],
             "Allies": [
                 {
                     "name": "Leader of Witches"
@@ -136,7 +131,7 @@
             "Enemies": [],
             "Near":{
                 "north": "Troll Hills",
-                "east": "People City",
+                "east": "People's City",
                 "south": "Cyclop City"
             },
             "Description": [
@@ -159,7 +154,6 @@
         {
             "Id": "PC",
             "Name": "People's City",
-            "Item": [],
             "Allies": [
                 {
                     "name": "Homeless man"
@@ -174,7 +168,7 @@
                     "hp": 300,
                     "dmg": 100,
                     "eq": [
-                        {"id": "Ring", "name": "Magic Ring", "damage":100, "type": "weapon"}
+                        {"id": "Ring", "name": "Magic Ring", "damage": 100, "type": "weapon"}
                     ]
                 }
             ],
@@ -204,7 +198,6 @@
         {
             "Id": "TH",
             "Name": "Troll Hills",
-            "Item": [],
             "Allies": [],
             "Enemies": [
                 {
@@ -244,7 +237,6 @@
         {
             "Id": "DM",
             "Name": "Dragon Mountains",
-            "Item": [],
             "Allies": [],
             "Enemies": [
                 {
@@ -252,7 +244,7 @@
                     "hp": 750,
                     "dmg": 500,
                     "eq": [
-                        {"id": "Necklase", "name": "Nimfa's Necklase", "damage":100, "type": "weapon"}
+                        {"id": "Necklase", "name": "Nimfa's Necklase", "damage": 100, "type": "weapon"}
                     ]
                 }
             ],
@@ -284,8 +276,8 @@
     },
     "player":{
         "current location": "Elven Valley",
-        "health": 300,
-        "damage": 20,
+        "health": 1000,
+        "damage": 60,
         "armour": 0,
         "eq":[]
     }

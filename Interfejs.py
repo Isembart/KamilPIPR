@@ -43,10 +43,10 @@ def main(game):
         # Zapisywanie gry
         elif action == "save":
             game.save_the_game(player)
-        
+
         elif action == "map":
             map = game.get_available_locations()
-            delayedPrint(f"Available moves:")
+            delayedPrint("Available moves:")
             for location in map:
                 print(location)
 
@@ -56,7 +56,6 @@ def main(game):
             delayedPrint(f"Heart: {player.health}")
             delayedPrint(f"Armour: {player.armour}")
             delayedPrint(f"Damage: {player.damage}")
-            delayedPrint(f"Gold: {player.gold}")
             pom_string = ""
             # Wyświetlanie ekwipunku
             for item in player.eq:

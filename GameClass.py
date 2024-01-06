@@ -56,8 +56,8 @@ class Game:
     def save_the_game(self, player, fight=True, enemy=None):
         with open(self.current_save, "r") as file:
             save = json.load(file)
-        save["player"]["armour"] = player.armour
         save["player"]["health"] = player.health
+        save["player"]["armour"] = player.armour
         save["player"]["damage"] = player.damage
         save["player"]["eq"] = player.eq
         save["player"]["current location"] = self.current_location_name
@@ -110,9 +110,9 @@ class Game:
         stringToPrint = self.current_location.get_description()
 
         # mozliwe lokacje do przejscia
-        stringToPrint += f"\nAvailable locations:"
+        stringToPrint += "\nAvailable locations:"
         for location in self.get_available_locations():
-            stringToPrint+=f"\n{location}"
+            stringToPrint += f"\n{location}"
 
         delayedPrint(stringToPrint)
 
@@ -129,12 +129,11 @@ class Game:
             if next_location:
                 self.current_location = next_location
                 self.current_location_name = next_location.name
+                delayedPrint(f"You moved to {next_location.name} \n")
             else:
-                #używamy zwyklego printa dlatego że w przypadku złegoruchu gracz musi pominac tekst 2 razy 
-                print("Invalid location.")
+                delayedPrint("Invalid location.")
         else:
-            #używamy zwyklego printa dlatego że w przypadku złegoruchu gracz musi pominac tekst 2 razy 
-            print("Invalid move. Try again.")
+            delayedPrint("Invalid move. Try again.")
 
     def get_enemies_in_current_location(self):
         return self.current_location.get_enemies()
@@ -143,7 +142,7 @@ class Game:
     def get_available_locations(self):
         """Zwraca listę dostępnych lokacji z aktualnej lokacji"""
         actions = []
-        for key,value in self.current_location.near_locations.items():
+        for key, value in self.current_location.near_locations.items():
             actions.append(f"{key}: {value}")
         return actions
 
@@ -158,10 +157,9 @@ class Game:
     # Funkcja kończy się w momencie gdy gracz lub przeciwnik umrze
     def fight(self, player, enemy):
         while True:
-            #calculate player stats
+            # calculate player stats
             playerAttack = player.damage
             playerArmour = player.armour
-
 
             for item in player.eq:
                 if "type" not in item:
@@ -171,14 +169,12 @@ class Game:
                 if item["type"] == "armour":
                     playerArmour += item["armour"]
             # Obrazenia zadane GRACZOWI są obliczanie przez klasę gracza na podstawie jego zmiennej armour
-            # dlatego obliczanie tego w tej klasie jest bez sensu 
+
             player.armour = playerArmour
-            # bez sensu i głupie, ale działa
-            #atak mozemy obliczyc bez problemu w tej metodzie
 
             delayedPrint(f"Your HP:{player.health}\nEnemy HP:{enemy.hp}\n")
             action = input(f"Run or Attack: ").strip().lower()
-            
+
             if(action == "attack"):
                 # Gracz atakuje przeciwnika:
                 enemy.take_damage(playerAttack)
@@ -217,3 +213,4 @@ class Game:
 
                 delayedPrint("You don't run away!")
                 fightEnemyTurn(player, enemy)
+                

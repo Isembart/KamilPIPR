@@ -9,7 +9,7 @@ from LocationClass import Location
 
 class TestLocationClass:
     @pytest.fixture
-    
+
     def location(self):
         jsonData = {"Id":"SA","Name":"Elven Valley","Item":[],"Allies":[],"Enemies":[],"Near":{"north":"Cyclops Castle","east":"Elven Camp"},"Description":[{"description":"You're name is Edgar and you're hurt."},{"description":"\nYou are waking up on the valley, where are lots of high grass."},{"description":"\nNear this Elven valley, is a Cyclops castle and Elven Camp."},{"description":"\nArtefacts to find in further game:"},{"description":"\n- The Nimfa's Necklase"},{"description":"\n- The Magic Ring"}]}
         return Location(jsonData)
@@ -37,5 +37,3 @@ class TestLocationClass:
 
     def test_get_enemies(self, location):
         assert location.get_enemies() == []
-
-

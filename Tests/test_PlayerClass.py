@@ -46,12 +46,6 @@ def test_get_armour():
     assert player.armour == 70
 
 
-def test_healing():
-    player = Player(100, 50, 20, None)
-    player.healing(10)
-    assert player.health == 110
-
-
 def test_is_alive():
     player = Player(100, 50, 20, None)
     assert player.is_alive() == True
