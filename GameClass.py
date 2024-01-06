@@ -168,7 +168,7 @@ class Game:
                 if item["type"] == "weapon":
                     playerAttack += item["damage"]
                 if item["type"] == "armour":
-                    playerAttack += item["armour"]
+                    playerArmour += item["armour"]
             # Obrazenia zadane GRACZOWI są obliczanie przez klasę gracza na podstawie jego zmiennej armour
             # dlatego obliczanie tego w tej klasie jest bez sensu 
             player.armour = playerArmour
