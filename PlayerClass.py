@@ -43,7 +43,7 @@ class Player:
     def get_armour(self, plate):
         self.armour += plate
 
-        # Setter, który
+        # Setter, który pobiera informacje odnośnie wzrostu poziomu życia
     def healing(self, hp):
         self.health += hp
 
