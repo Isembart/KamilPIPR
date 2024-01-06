@@ -157,12 +157,31 @@ class Game:
     # Funkcja kończy się w momencie gdy gracz lub przeciwnik umrze
     def fight(self, player, enemy):
         while True:
+            #calculate player stats
+            playerAttack = player.damage
+            playerArmour = player.armour
+
+
+            for item in player.eq:
+                if "type" not in item:
+                    continue
+                if item["type"] == "weapon":
+                    playerAttack += item["damage"]
+                if item["type"] == "armour":
+                    playerAttack += item["armour"]
+            # Obrazenia zadane GRACZOWI są obliczanie przez klasę gracza na podstawie jego zmiennej armour
+            # dlatego obliczanie tego w tej klasie jest bez sensu 
+            player.armour = playerArmour
+            # bez sensu i głupie, ale działa
+            #atak mozemy obliczyc bez problemu w tej metodzie
+
             delayedPrint(f"Your HP:{player.health}\nEnemy HP:{enemy.hp}\n")
             action = input(f"Run or Attack: ").strip().lower()
+            
             if(action == "attack"):
                 # Gracz atakuje przeciwnika:
-                enemy.take_damage(player.damage)
-                delayedPrint(f"You deal {player.damage} damage to {enemy.name}")
+                enemy.take_damage(playerAttack)
+                delayedPrint(f"You deal {playerAttack} damage to {enemy.name}")
                 time.sleep(0.5)
                 if not enemy.is_alive():
                     delayedPrint(f"You felled {enemy.name}!")

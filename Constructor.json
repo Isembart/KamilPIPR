@@ -34,7 +34,7 @@
                     "hp": 180,
                     "dmg": 80,
                     "eq": [
-                        {"id": "Bludgeon", "name": "Bludgeon", "properties": {"use": "Picked up a Bludgeon", "dmg": 100}}
+                        {"id": "Bludgeon", "name": "Bludgeon", "damage":100, "type": "weapon"}
                     ]
                 },
                 {
@@ -42,7 +42,7 @@
                     "hp": 300,
                     "dmg": 120,
                     "eq": [
-                        {"id": "War Hammer", "name": "War Hammer", "properties": {"use": "Picked up a Hammer", "dmg": 125 }}
+                        {"id": "War Hammer", "name": "War Hammer", "damage":100, "type": "weapon"}
                     ]
                 }
             ],
@@ -75,8 +75,8 @@
                     "hp": 100,
                     "dmg": 70,
                     "eq": [
-                        {"id": "Sword", "name": "Sword", "properties": {"use": "The Sword is achieved", "dmg": 100}},
-                        {"id": "Armour", "name": "Armour", "properties": {"use": "You have an armour", "defence": 100}},
+                        {"id": "Sword", "name": "Sword", "damage":100, "type": "weapon"},
+                        {"id": "Armour", "name": "Armour", "armour":50, "type": "armour"},
                         {"id": "Blood", "name": "Blood of Thunderroar", "properties": {"use": "Take this medicine", "heal": 880}}
                     ]
             }
@@ -111,7 +111,7 @@
                     "hp": 300,
                     "dmg": 150,
                     "eq": [
-                        {"id": "Wand", "name": "Leader of witches' Wand", "properties": {"use":"Pick up the Wand", "dmg": 200}}
+                        {"id": "Wand", "name": "Leader of witches' Wand", "damage":100, "type": "weapon"}
                     ]
                 }
             ],
@@ -174,7 +174,7 @@
                     "hp": 300,
                     "dmg": 100,
                     "eq": [
-                        {"id": "Ring", "name": "Magic Ring", "properties": {"use": "Taking a Magic Ring", "dmg": 400}}
+                        {"id": "Ring", "name": "Magic Ring", "damage":100, "type": "weapon"}
                     ]
                 }
             ],
@@ -252,7 +252,7 @@
                     "hp": 750,
                     "dmg": 500,
                     "eq": [
-                        {"id": "Necklase", "name": "Nimfa's Necklase", "properties": {"use": "Bring this Necklase", "heal": 700}}
+                        {"id": "Necklase", "name": "Nimfa's Necklase", "damage":100, "type": "weapon"}
                     ]
                 }
             ],
