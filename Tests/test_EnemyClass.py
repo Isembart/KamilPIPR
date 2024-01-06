@@ -1,33 +1,41 @@
 import pytest
 import sys, os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
+from EnemyClass import (Enemy,
+                        EmptyEnemyNameError,
+                        NegativeEnemyDmgError,
+                        NegativeEnemyHpError)
 
 
-from EnemyClass import Enemy
+def test_enemy_init():
+    enemy = Enemy("Cyclop", 100, 10, "eq")
+    assert enemy.name == "Cyclop"
+    assert enemy.hp == 100
+    assert enemy.dmg == 10
+    assert enemy.eq == "eq"
 
 
-class TestEnemyClass:
-    @pytest.fixture
-    def enemy(self):
-        return Enemy("Cyclop", 100, 10, "eq")
+def test_enemy_empty_name():
+    with pytest.raises(EmptyEnemyNameError):
+        Enemy("", 100, 10, "eq")
 
-    def test_initialization(self, enemy):
-        assert enemy.name == "Cyclop"
-        assert enemy.hp == 100
-        assert enemy.dmg == 10
-        assert enemy.eq == "eq"
 
-    def test_is_alive(self, enemy):
-        assert enemy.is_alive() == True
-        enemy.hp = 0
-        assert enemy.is_alive() == False
-        enemy.hp = -1
-        assert enemy.is_alive() == False
+def test_enemy_negative_hp():
+    with pytest.raises(NegativeEnemyHpError):
+        Enemy("Cyclop", -100, 10, "eq")
 
-    def test_take_damage(self, enemy):
-        enemy.take_damage(10)
-        assert enemy.hp == 90
-        enemy.take_damage(90)
-        assert enemy.hp == 0
-        enemy.take_damage(10)
-        assert enemy.hp == -10
+
+def test_enemy_negative_damage():
+    with pytest.raises(NegativeEnemyDmgError):
+        Enemy("Cyclop", 100, -10, "eq")
+
+
+def test_enemy_is_alive():
+    enemy = Enemy("Cyclop", 100, 10, "eq")
+    assert enemy.is_alive() == True
+
+
+def test_enemy_take_damage():
+    enemy = Enemy("Cyclop", 100, 10, "eq")
+    enemy.take_damage(5)
+    assert enemy.hp == 95

@@ -1,35 +1,54 @@
+from PlayerClass import (Player,
+                         NegativePlayerHealthError,
+                         NegativePlayerArmourError,
+                         NegativePlayerDamageError)
 import pytest
-import sys, os
+import sys
+import os
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
-from PlayerClass import Player
-import math #potrzebne do obliczenia pancerza
 
 
-class TestPlayerClass:
-    @pytest.fixture
-    def player(self):
-        return Player(100, 50, 20, None)
+def test_initialization():
+    player = Player(100, 50, 20, None)
+    assert player.health == 100
+    assert player.armour == 50
+    assert player.damage == 20
+    assert player.eq == None
 
-    def test_initialization(self, player):
-        assert player.health == 100
-        assert player.armour == 50
-        assert player.damage == 20
-        assert player.eq == None
 
-    def test_take_damage(self, player):
-        player.take_damage(20)
-        assert player.health == 100 - math.floor(20*(1-(50/100)))
+def test_player_negative_health():
+    with pytest.raises(NegativePlayerHealthError):
+        Player(-1, 50, 20, None)
 
-    def test_repair_armour(self, player):
-        player.gold = 100
-        player.repair_armour(20, 60)
-        assert player.armour == 60
-        assert player.gold == 80
 
-    def test_getting_rich(self, player):
-        player.getting_rich(200)
-        assert player.gold == 200
+def test_player_negative_armour():
+    with pytest.raises(NegativePlayerArmourError):
+        Player(100, -50, 20, None)
 
-    def test_healing(self, player):
-        player.healing(10)
-        assert player.health == 110
+
+def test_player_negative_damage():
+    with pytest.raises(NegativePlayerDamageError):
+        Player(100, 50, -20, None)
+
+
+def test_take_damage():
+    player = Player(100, 50, 20, None)
+    player.take_damage(20)
+    assert player.health == 90
+
+
+def test_get_armour():
+    player = Player(100, 50, 20, None)
+    player.get_armour(20)
+    assert player.armour == 70
+
+
+def test_healing():
+    player = Player(100, 50, 20, None)
+    player.healing(10)
+    assert player.health == 110
+
+
+def test_is_alive():
+    player = Player(100, 50, 20, None)
+    assert player.is_alive() == True

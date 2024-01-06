@@ -1,40 +1,52 @@
 import math
 
 
+class NegativePlayerHealthError(ValueError):
+    pass
+
+
+class NegativePlayerArmourError(ValueError):
+    pass
+
+
+class NegativePlayerDamageError(ValueError):
+    pass
+
+# Klasa Player pobiera informacje o naszym graczu, czyli jaką wartość życia ma itp.
 class Player:
     def __init__(self, health: int, armour: int, damage: int, eq):
         if health < 0:
-            raise ValueError("Health cannot be negative")
+            raise NegativePlayerHealthError("Health cannot be negative")
         if armour < 0:
-            raise ValueError("Armour cannot be negative")
+            raise NegativePlayerArmourError("Armour cannot be negative")
         if damage < 0:
-            raise ValueError("Damage cannot be negative")
+            raise NegativePlayerDamageError("Damage cannot be negative")
         self.health = health
         self.armour = armour
         self.damage = damage
         self.gold = 0
         self.eq = eq
 
+        # Metoda służąca do pobierania itemów od zabitych stworów
     def pick_up_item(self, item):
         pass
 
+        # Metoda służąca do opuszczania itemów
     def drop_weapon(self, item):
         pass
 
+        # Metoda, która odpowiada za przyjmowanie przez postać damage od wrogów
     def take_damage(self, dmg):
         self.health = self.health - math.floor(dmg*(1-(self.armour/100)))
 
-    def repair_armour(self, plate):
+        # Setter, który pobiera informacje odnośnie wzrostu poziomu pancerza
+    def get_armour(self, plate):
         self.armour += plate
 
-    def earn_gold(self, money):
-        self.gold += money
-
+        # Setter, który
     def healing(self, hp):
         self.health += hp
 
-    def loss_gold(self, money):
-        self.gold -= money
-
+        # Getter, który sprawdza za pomocą wyrażenia typu bool czy nasz gracz żyję
     def is_alive(self):
         return self.health > 0
